@@ -96,5 +96,4 @@ def run():
                     # 스크래핑 결과를 DB의 Deal 테이블에 저장
 
         except Exception as e :
-     
-        
+            continue
