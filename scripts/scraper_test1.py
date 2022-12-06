@@ -1,3 +1,4 @@
+# 웹 스크래핑 코드
 import requests
 from bs4 import BeautifulSoup
 
