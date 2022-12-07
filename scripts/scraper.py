@@ -8,6 +8,14 @@ import telegram
 import env_info as ti # 장고이기때문에 세팅즈에서 베이스 폴더를 여기로 잡고 있기 때문에
 from hotdeal.models import Deal
 
+from datetime import datetime, timedelta
+
+# db 테이블 데이터 유지기간 설정 변수
+during_date = 3
+
+# DB 테이블 저장을 위한 추천 갯수 지정(3개이상)
+up_cnt_limit = 3
+
 TLGM_BOT_API = ti.TLGM_BOT_API
 tlgm_bot = telegram.Bot(TLGM_BOT_API) # API , 메모리에 올라감, 식별을 위해 변수지정
 #  https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu
@@ -61,6 +69,10 @@ soup = BeautifulSoup(res.text, "html.parser")
 
 
 def run():
+    # DB 테이블에 3일치만 유지함
+    # row, _ = Deal.objects.filter(cdate__lte=dateime.now() - timedelta(days=3)).delete()
+    row, _ = Deal.objects.filter(cdate__lte=datetime.now() - timedelta(minutes=during_date)).delete()
+    print("DB delete 갯수",row)
     items = soup.select("tr.list1, tr.list0")
     # print(items)
     # img_url, title, link, replay_count, up_count
@@ -78,6 +90,9 @@ def run():
             up_count = up_count.split("-")[0]
             up_count = int(up_count)
             print(up_count)
+
+
+
             if up_count >= 3:
                 # 터미널 프린트
                 print(img_url, title, link, reply_count, up_count)

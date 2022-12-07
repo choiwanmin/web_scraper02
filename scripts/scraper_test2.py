@@ -3,7 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 import telegram
-import teletram_info as ti
+from . import teletram_info as ti
 
 TLGM_BOT_API = ti.TLGM_BOT_API
 tlgm_bot = telegram.Bot(TLGM_BOT_API) # API , 메모리에 올라감, 식별을 위해 변수지정
